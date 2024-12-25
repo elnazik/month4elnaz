@@ -1,6 +1,5 @@
 {%extends 'base.html'%}
 {%block content%}
-{%for post in posts%}
 <div class="card" style="width: 18rem;">
   {%if post.image%}
   <img src="{{post.image.url}}" class="card-img-top" alt="...">
@@ -11,8 +10,6 @@
     <h5 class="card-title">{{post.title}}</h5>
     <p class="card-text">{{post.description}}</p>
     <p class="card-text" style="color: #7f8cff;">{{post.created_at}} </p>
-    <a href="/posts/{{post.id}}/" class="btn btn-primary">Go to post</a>
   </div>
 </div>
-{%endfor%}
 {%endblock%}
