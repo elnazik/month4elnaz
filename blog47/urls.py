@@ -24,18 +24,22 @@ from posts.views import (
     post_detail_view,
     post_create_view,
 )
+from user.views import register_view, login_view, logout_view
 from django.conf.urls.static import static
 from django.conf import settings
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", main_view),
+    path("", main_view, name="main-page"),
     path("hello/", hello_view),
     path("html-view/", html_view),
     path("posts/", posts_list_view),
     path("posts/<int:id>/", post_detail_view),
     path("posts/create/", post_create_view),
+    path("register/", register_view),
+    path("login/", login_view, name="login-view"),
+    path("logout/", logout_view, name="logout-view"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import random
 from posts.models import Post
 from posts.forms import PostForm
+from django.contrib.auth.decorators import login_required
 
 def hello_view(request):
     return HttpResponse(f"Hello World! {random.randint(1,100)}" )
@@ -15,17 +16,19 @@ def main_view(request):
     if request.method == 'GET':
         return render(request, 'base.html')
 
-
+@login_required(login_url='login-view')
 def posts_list_view(request):
     if request.method == 'GET':
         posts = Post.objects.all()
         return render(request, "posts/post_list.html", context={"posts": posts})
 
+@login_required(login_url='login-view')
 def post_detail_view(request, id):
     if request.method == 'GET':
         post = Post.objects.get(id=id)
         return render(request, "posts/post_detail.html", context={"post": post})
 
+@login_required(login_url='login-view')
 def post_create_view(request):
     if request.method == 'GET':
         form= PostForm()
