@@ -1,4 +1,7 @@
 from django import forms
+from posts.models import Category
+
+from posts.models import Category
 
 
 class PostForm(forms.Form):
@@ -26,3 +29,29 @@ class PostForm(forms.Form):
         if len(description) < 5:
             raise forms.ValidationError("Very short description")
         return description
+
+
+class SearchForm(forms.Form):
+        search = forms.CharField(
+        required=False,
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder':'Search', 'class':'form-control'})
+        )
+
+        category = forms.ModelChoiceField(
+            queryset=Category.objects.all(),
+            required=False,
+            widget=forms.Select(attrs={'class':'form-control'})
+        )
+
+        orderings = (
+            ("created_at", "По дате создания"),
+            ("updated_at", "По дате создания"),
+            ("rate", "По оценке"),
+            ("-rate", "По оценке ро убыванию"),
+            ("-updated_at", "-По дате изменения по убыванию"),
+            ("-created_at", "По дате создания по убыванию"),
+        )
+        ordering = forms.ChoiceField(
+            choices=orderings, required=False, widget=forms.Select(attrs={'class':'form-control'})
+        )
